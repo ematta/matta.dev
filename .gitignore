@@ -1,0 +1,11 @@
+.venv
+__pycache__
+.vscode
+.mypy_cache
+.coverage
+*.egg-info
+.pytest_cache
+*.code-workspace
+.envrc
+*.toml
+*.log
