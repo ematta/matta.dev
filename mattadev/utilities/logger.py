@@ -1,20 +1,21 @@
 import logging
 
-logger: "logging.Logger" = logging.getLogger(__name__)
+from mattadev.utilities.config import load_config
 
-c_handler: "logging.StreamHandler" = logging.StreamHandler()
-c_format: "logging.Formatter" = logging.Formatter(
-    "%(name)s - %(levelname)s - %(message)s"
-)
-c_handler.setLevel(logging.WARNING)
-c_handler.setFormatter(c_format)
+config = load_config()
 
-f_handler: "logging.StreamHandler" = logging.FileHandler("mattadev.log")
-f_format: "logging.Formatter" = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-f_handler.setLevel(logging.WARNING)
-f_handler.setFormatter(f_format)
+logger = logging.getLogger(__name__)
+logger.setLevel(config['app']['LOGGER_LEVEL'])
 
-logger.addHandler(c_handler)
-logger.addHandler(f_handler)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+fh = logging.FileHandler('mattadev.log')
+fh.setLevel(config['app']['LOGGER_LEVEL'])
+fh.setFormatter(formatter)
+
+ch = logging.StreamHandler()
+ch.setLevel(config['app']['LOGGER_LEVEL'])
+ch.setFormatter(formatter)
+
+logger.addHandler(fh)
+logger.addHandler(ch)
