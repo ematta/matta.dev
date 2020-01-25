@@ -2,9 +2,9 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import router from '@/router';
 import {
+  getUserInfoApi,
   loginUserApi,
   registerUserApi,
-  getUserInfoApi,
 } from '@/api';
 import { isValidJwt, jwtGetExpireTime } from '@/utility';
 
@@ -45,7 +45,6 @@ const store = new Vuex.Store({
           context.commit('setErrorMessage', error);
         });
     },
-
     checkIfLoggedInAlready(context) {
       return new Promise((resolve) => {
         const token = Vue.$cookies.get('token');
