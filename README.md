@@ -20,7 +20,10 @@ This app loads the configs from root under `[environment].toml`. Make sure to se
 
 ### TOML Structure
 
-```
+```ini
+[app]
+LOGGER_LEVEL = 10 # https://docs.python.org/3.8/library/logging.html#logging-levels
+
 [database]
 
 POSTGRES_URL = ''
@@ -34,3 +37,7 @@ POSTGRES_DB = ''
 REDIS_HOST = ''
 REDIS_PORT = 000
 ```
+
+## Logging Level
+
+We are setting this via the [integer level](https://docs.python.org/3.8/library/logging.html#logging-levels) instead of the constant (read the docs).
