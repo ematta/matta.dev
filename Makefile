@@ -6,6 +6,11 @@ all:
 	@. .venv/bin/activate; \
 	python app.py
 
+.PHONY: debug
+debug:
+	@. .venv/bin/activate; \
+	adev runserver 
+
 .PHONY: destroy
 destroy:
 	@rm -rf .venv

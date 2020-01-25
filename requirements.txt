@@ -1,5 +1,8 @@
 -e .
 
+# aiohttp dev tools
+aiohttp-devtools==0.13.1
+
 # mypy
 mypy==0.761
 
