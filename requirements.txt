@@ -1,0 +1,19 @@
+-e .
+
+# mypy
+mypy==0.761
+
+# pytest
+pytest==5.3.4
+pytest-aiohttp==0.3.0
+
+# Flake8
+flake8==3.7.9
+flake8-import-order==0.18.1
+
+# Other
+black==19.10b0
+coverage==5.0.3
+safety==1.8.5
+bandit==1.6.2
+ipython==7.11.1
