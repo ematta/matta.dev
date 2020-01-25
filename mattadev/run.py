@@ -1,6 +1,6 @@
-from aiohttp import web
+import base64
 
-import aiohttp_jinja2
+from aiohttp import web
 
 from aiohttp_security import (
     SessionIdentityPolicy,
@@ -9,16 +9,16 @@ from aiohttp_security import (
 )
 
 from aiohttp_session import setup as setup_session
-from aiohttp_session.redis_storage import RedisStorage
+from aiohttp_session.cookie_storage import EncryptedCookieStorage
+from cryptography.fernet import Fernet
 
-import jinja2
+import aiohttp_cors
 
 from mattadev.routes.user import routes as user_routes
 from mattadev.routes.index import routes as index_routes
-from mattadev.utilities.config import load_config
+from mattadev.utilities.config import config
 from mattadev.utilities.database import DBAuthorizationPolicy, init_db
 from mattadev.utilities.logger import logger
-from mattadev.utilities.redis import init_redis
 
 
 async def current_user_ctx_processor(request):
@@ -29,16 +29,23 @@ async def current_user_ctx_processor(request):
 
 async def init_app():
     app = web.Application()
-    app["config"] = load_config()
-    logger.debug(f"Config: {app['config']}")
+    app["config"] = config
     db_pool = await init_db(app)
-    redis_pool = await init_redis(app)
-    setup_session(app, RedisStorage(redis_pool))
-    aiohttp_jinja2.setup(
+    setup_session(
         app,
-        loader=jinja2.PackageLoader("mattadev"),
-        context_processors=[current_user_ctx_processor],
+        EncryptedCookieStorage(
+            base64.urlsafe_b64decode(app["config"]["secret_key"])
+        )
     )
     setup_security(app, SessionIdentityPolicy(), DBAuthorizationPolicy(db_pool))
     app.add_routes(user_routes + index_routes)
+    cors = aiohttp_cors.setup(app, defaults={
+        "*": aiohttp_cors.ResourceOptions(
+                allow_credentials=True,
+                expose_headers="*",
+                allow_headers="*",
+            )
+    })
+    for route in list(app.router.routes()):
+        cors.add(route)
     return app
