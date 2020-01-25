@@ -23,7 +23,7 @@ async def get_user_by_email(conn, email):
         SELECT * FROM users
         WHERE email = $1
         """,
-        email
+        email,
     )
     return result
 

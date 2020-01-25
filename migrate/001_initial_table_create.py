@@ -1,6 +1,6 @@
 import asyncpg
 
-from server.run import load_config
+from server.utilities.config import load_config
 from server.utilities.database import db_url
 
 
