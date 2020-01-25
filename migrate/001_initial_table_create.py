@@ -1,7 +1,7 @@
 import asyncpg
 
-from server.utilities.config import load_config
-from server.utilities.database import db_url
+from mattadev.utilities.config import load_config
+from mattadev.utilities.database import db_url
 
 
 async def migrate():

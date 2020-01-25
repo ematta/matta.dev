@@ -1,6 +1,6 @@
 from aiohttp import web
 
-from server.run import app
+from mattadev.run import init_app
 
 if __name__ == "__main__":
-    web.run_app(app)
+    web.run_app(init_app())

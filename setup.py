@@ -14,6 +14,7 @@ install_requires = [
     'brotlipy==0.7.0',
     'cchardet==2.1.5',
     'Jinja2==2.10.3',
+    'motor==2.1.0',
     'psycopg2==2.8.4',
     'PyJWT==1.7.1',
     'pytoml==0.1.21',

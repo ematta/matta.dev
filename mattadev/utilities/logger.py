@@ -9,7 +9,7 @@ c_format: "logging.Formatter" = logging.Formatter(
 c_handler.setLevel(logging.WARNING)
 c_handler.setFormatter(c_format)
 
-f_handler: "logging.StreamHandler" = logging.FileHandler("server.log")
+f_handler: "logging.StreamHandler" = logging.FileHandler("mattadev.log")
 f_format: "logging.Formatter" = logging.Formatter(
     "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
