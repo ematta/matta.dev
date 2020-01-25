@@ -1,13 +1,19 @@
 import os
 import pathlib
 
+from cryptography.fernet import Fernet
 import pytoml
 
 
-AIOHTTP_ENV = os.environ["AIOHTTP_ENV"]
+APP_ENV = os.environ["APP_ENV"]
 APP_ROOT = pathlib.Path(__file__).parent.parent.parent
 
 
 def load_config():
-    with open(f"{APP_ROOT}/{AIOHTTP_ENV}.toml") as f:
-        return pytoml.load(f)
+    config = {}
+    with open(f"{APP_ROOT}/{APP_ENV}.toml") as f:
+        config = pytoml.load(f)
+    config['secret_key'] = Fernet.generate_key()
+    return config
+
+config = load_config()

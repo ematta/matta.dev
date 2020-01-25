@@ -1,8 +1,6 @@
 import logging
 
-from mattadev.utilities.config import load_config
-
-config = load_config()
+from mattadev.utilities.config import config
 
 logger = logging.getLogger(__name__)
 logger.setLevel(config['app']['LOGGER_LEVEL'])
