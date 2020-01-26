@@ -14,11 +14,11 @@ from cryptography.fernet import Fernet
 
 import aiohttp_cors
 
-from mattadev.routes.user import routes as user_routes
-from mattadev.routes.index import routes as index_routes
-from mattadev.utilities.config import config
-from mattadev.utilities.database import DBAuthorizationPolicy, init_db
-from mattadev.utilities.logger import logger
+from api.routes.user import routes as user_routes
+from api.routes.index import routes as index_routes
+from api.utilities.config import config
+from api.utilities.database import DBAuthorizationPolicy, init_db
+from api.utilities.logger import logger
 
 
 async def current_user_ctx_processor(request):

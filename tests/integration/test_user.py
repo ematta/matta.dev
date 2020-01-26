@@ -1,5 +1,5 @@
 import pytest
-from mattadev.routes.user import routes as user_routes
+from api.routes.user import routes as user_routes
 from aiohttp import web
 
 async def test_user_name(aiohttp_client, loop):

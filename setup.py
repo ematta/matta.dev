@@ -18,7 +18,7 @@ install_requires = [
 ]
 
 setup(
-    name='matta.dev',
+    name='api.matta.dev',
     version='0.1',
     install_requires=install_requires,
 )
