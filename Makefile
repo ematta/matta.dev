@@ -14,14 +14,12 @@ debug:
 .PHONY: destroy
 destroy:
 	@rm -rf .venv; \
-	rm -rf node_modules;
 
 .PHONY: install
 install: venv
 	@. .venv/bin/activate \
 	&& pip install --upgrade pip \
 	&& pip install -r requirements.txt
-	&& npm i
 
 .PHONY: venv
 venv:
