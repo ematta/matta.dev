@@ -17,7 +17,8 @@ import aiohttp_cors
 from api.routes.user import routes as user_routes
 from api.routes.index import routes as index_routes
 from api.utilities.config import config
-from api.utilities.database import DBAuthorizationPolicy, init_db
+from api.database.auth import DBAuthorizationPolicy
+from api.database.engine import init_db_pool
 from api.utilities.logger import logger
 
 
@@ -30,7 +31,7 @@ async def current_user_ctx_processor(request):
 async def init_app():
     app = web.Application()
     app["config"] = config
-    db_pool = await init_db(app)
+    db_pool = await init_db_pool(app)
     setup_session(
         app,
         EncryptedCookieStorage(

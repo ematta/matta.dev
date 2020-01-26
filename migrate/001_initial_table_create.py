@@ -1,7 +1,7 @@
 import asyncpg
 
 from api.utilities.config import config
-from api.utilities.database import db_url
+from api.database.engine import db_url
 
 
 async def migrate():
