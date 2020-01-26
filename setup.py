@@ -5,7 +5,6 @@ install_requires = [
     'aiodns==2.0.0',
     'aiohttp==3.6.2',
     'aiohttp-cors==0.7.0',
-    'aiohttp-security==0.4.0',
     'aiohttp-session==2.9.0',
     'asyncpg==0.20.1',
     'bcrypt==3.1.7',
