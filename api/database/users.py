@@ -1,5 +1,5 @@
 async def find_user_by_email(conn, email):
-    result = await conn.execute(
+    result = await conn.fetchrow(
         """
         SELECT * FROM users
         WHERE email = $1
@@ -10,7 +10,7 @@ async def find_user_by_email(conn, email):
 
 
 async def get_users(conn):
-    result = await conn.execute(
+    result = await conn.fetch(
         """
         SELECT * FROM users
         ORDER BY $1
