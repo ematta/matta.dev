@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from '@/components/Login.vue';
 import Logout from '@/components/Logout.vue';
+import Profile from '@/components/Profile.vue';
 import Register from '@/components/Register.vue';
 
 Vue.use(VueRouter);
@@ -21,6 +22,11 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register,
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
   },
 ];
 
