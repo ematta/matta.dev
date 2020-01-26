@@ -13,7 +13,12 @@
         <div class="field">
           <label class="label is-large" for="email">Email:</label>
           <div class="control">
-            <input type="email" class="input is-large" id="email" v-model="email">
+            <input
+              type="email"
+              class="input is-large"
+              id="email"
+              v-model="email"
+            />
           </div>
         </div>
         <div class="field">
@@ -31,9 +36,10 @@
 
         <div class="control">
           <router-link
+            id="submit"
             class="button is-large is-primary"
             v-on:click.native="authenticate"
-            :to="{ name: 'Search' }"
+            :to="{ name: 'Profile' }"
           >
             Login
           </router-link>
@@ -55,9 +61,8 @@ export default {
     };
   },
   methods: {
-    authenticate() {
-      this.$store.dispatch('login', { email: this.email, password: this.password });
-      this.$store.dispatch('getUserInfo');
+    async authenticate() {
+      await this.$store.dispatch('login', { email: this.email, password: this.password });
     },
   },
 };

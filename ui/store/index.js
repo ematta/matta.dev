@@ -2,30 +2,66 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import router from '@/router';
 import {
-  getUserInfoApi,
+  checkIfLoggedInAlreadyApi,
   loginUserApi,
   registerUserApi,
 } from '@/api';
-import { isValidJwt, jwtGetExpireTime } from '@/utility';
+import { isValidToken, tokenGetExpireTime } from '@/utility';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    jwt: '',
+    token: '',
     user: {},
     errorMessage: '',
     isAuthenticated: false,
   },
   actions: {
-    login(context, user) {
-      return loginUserApi(user)
+    login(context, payload) {
+      return loginUserApi(payload)
         .then((response) => {
-          context.commit('setJwt', response.data);
+          context.commit('setToken', response.data.token);
+          context.commit('setUser', response.data.user);
+          context.commit('setIsAuthenticated', isValidToken(response.data.token));
+          Vue.$cookies.set('token', response.data.token, tokenGetExpireTime(response.data.token));
         })
         .catch((error) => {
           context.commit('setErrorMessage', error);
         });
+    },
+    logout(context) {
+      return new Promise((resolve) => {
+        Vue.$cookies.remove('token');
+        context.commit('setToken', '');
+        context.commit('setUser', {});
+        context.commit('setIsAuthenticated', false);
+        resolve();
+      });
+    },
+    checkIfLoggedInAlready(context) {
+      const token = Vue.$cookies.get('token');
+      let check = null;
+      if (token && isValidToken(token)) {
+        check = checkIfLoggedInAlreadyApi(token)
+          .then((response) => {
+            context.commit('setUser', response.data.user);
+            context.commit('setToken', token);
+            context.commit('setIsAuthenticated', isValidToken(response.data.token));
+          })
+          .catch((error) => {
+            context.commit('setUser', {});
+            context.commit('setToken', '');
+            context.commit('setIsAuthenticated', false);
+            context.commit('setErrorMessage', error);
+          });
+      } else {
+        context.commit('setUser', {});
+        context.commit('setToken', '');
+        context.commit('setIsAuthenticated', false);
+        router.push({ name: 'Login' });
+      }
+      return check;
     },
     registerUser(context, user) {
       return registerUserApi(user)
@@ -36,56 +72,23 @@ const store = new Vuex.Store({
           context.commit('setErrorMessage', error);
         });
     },
-    getUserInfo(context) {
-      return getUserInfoApi(context.state.jwt)
-        .then((response) => {
-          context.commit('setUser', response);
-        })
-        .catch((error) => {
-          context.commit('setErrorMessage', error);
-        });
-    },
-    checkIfLoggedInAlready(context) {
-      return new Promise((resolve) => {
-        const token = Vue.$cookies.get('token');
-        if (token && isValidJwt(token)) {
-          context.commit('setJwtSansCookie', token);
-          resolve();
-        }
-      })
-        .then(() => {
-          context.dispatch('getUserInfo');
-        });
-    },
   },
   mutations: {
     setErrorMessage(state, errorMessage) {
       state.errorMessage = errorMessage;
     },
-    setJwt(state, payload) {
-      state.jwt = payload.token;
-      state.user = payload.user;
-      state.isAuthenticated = isValidJwt(payload.token);
-      Vue.$cookies.set('token', payload.token, jwtGetExpireTime(payload.token));
-    },
-    setJwtSansCookie(state, token) {
-      state.jwt = token;
-      state.isAuthenticated = isValidJwt(token);
+    setToken(state, token) {
+      state.token = token;
     },
     setUser(state, user) {
-      state.user.name = user.data.user.name;
-      state.user.email = user.data.user.email;
-      state.user.id = user.data.user.id;
+      state.user = user;
     },
-    logout(state) {
-      state.jwt = '';
-      state.user = {};
-      state.isAuthenticated = false;
-      Vue.$cookies.remove('token');
+    setIsAuthenticated(state, status) {
+      state.isAuthenticated = status;
     },
   },
   getters: {
-    jwt: state => state.jwt,
+    token: state => state.token,
     user: state => state.user,
     isAuthenticated: state => state.isAuthenticated,
   },
