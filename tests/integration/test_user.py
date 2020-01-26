@@ -16,14 +16,11 @@ async def test_user_name(aiohttp_client, loop):
         assert resp.status == 200
         real_data = await resp.json()
         check_data = {
-            'success': True,
-            'user':
-                {
-                    'id': 1,
-                    'name': 'root',
-                    'email': 'admin@matta.dev',
-                    'role_id': 1,
-                    'approved': True
-                }
-            }
-        assert real_data == check_data
+            'id': 1,
+            'name': 'root',
+            'email': 'admin@matta.dev',
+            'role_id': 1,
+            'approved': True
+        }
+        assert real_data['user'] == check_data
+        assert len(real_data['token']) > 0
