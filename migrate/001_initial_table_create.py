@@ -1,11 +1,10 @@
 import asyncpg
 
-from mattadev.utilities.config import load_config
-from mattadev.utilities.database import db_url
+from api.utilities.config import config
+from api.database.engine import db_url
 
 
 async def migrate():
-    config = load_config()
     url = db_url(config["database"])
     conn = await asyncpg.connect(url)
     await conn.execute("DROP TABLE IF EXISTS roles CASCADE")
@@ -24,7 +23,7 @@ async def migrate():
         CREATE TABLE IF NOT EXISTS users(
             id          SERIAL,
             name        text,
-            username    text,
+            email       text,
             password    text,
             role_id     integer,
             PRIMARY KEY (id),

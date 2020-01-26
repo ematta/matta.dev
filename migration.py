@@ -3,7 +3,7 @@ import os
 import pathlib
 import sys
 
-from mattadev.utilities.logger import logger
+from api.utilities.logger import logger
 
 
 def load_module(module):

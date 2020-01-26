@@ -9,3 +9,6 @@ __pycache__
 .envrc
 *.toml
 *.log
+.DS_Store
+node_modules
+dist

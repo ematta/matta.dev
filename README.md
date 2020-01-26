@@ -16,7 +16,7 @@ Make sure you are running `docker-compose up -d` to get postgres up and running.
 
 ## CONFIGURATION
 
-This app loads the configs from root under `[environment].toml`. Make sure to set `AIOHTTP_ENV` to either `development`, `testing`, or `production`.
+This app loads the configs from root under `[environment].toml`. Make sure to set `APP_ENV` to either `development`, `testing`, or `production`.
 
 ### TOML Structure
 
@@ -31,11 +31,6 @@ POSTGRES_PORT = 000
 POSTGRES_USER = ''
 POSTGRES_PASSWORD = ''
 POSTGRES_DB = ''
-
-[redis]
-
-REDIS_HOST = ''
-REDIS_PORT = 000
 ```
 
 ## Logging Level

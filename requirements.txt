@@ -12,7 +12,6 @@ pytest-aiohttp==0.3.0
 
 # Flake8
 flake8==3.7.9
-flake8-import-order==0.18.1
 
 # Other
 black==19.10b0
