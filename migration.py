@@ -3,7 +3,7 @@ import os
 import pathlib
 import sys
 
-from api.utilities.logger import logger
+from server.utilities.logger import logger
 
 
 def load_module(module):

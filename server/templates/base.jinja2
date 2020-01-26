@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+    <head>
+        {% include "components/header.jinja2" %}
+    </head>
+    <body>
+        {% include "components/nav.jinja2" %}
+        <div class="container justify-content-center align-items-center">
+            {% block content %}{% endblock content %}
+        </div>
+        {% include "components/footer.jinja2" %}
+    </body>
+</html>

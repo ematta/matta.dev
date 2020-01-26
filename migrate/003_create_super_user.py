@@ -2,9 +2,9 @@ import os
 
 import asyncpg
 
-from api.utilities.config import config
-from api.database.engine import db_url
-from api.utilities.security import generate_password_hash
+from server.utilities.config import config
+from server.database.postgres import db_url
+from server.utilities.security import generate_password_hash
 
 
 async def migrate():

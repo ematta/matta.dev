@@ -1,7 +1,7 @@
 import asyncpg
 
-from api.utilities.config import config
-from api.database.engine import db_url
+from server.utilities.config import config
+from server.database.postgres import db_url
 
 
 async def migrate():

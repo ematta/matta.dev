@@ -31,6 +31,12 @@ POSTGRES_PORT = 000
 POSTGRES_USER = ''
 POSTGRES_PASSWORD = ''
 POSTGRES_DB = ''
+
+[redis]
+
+REDIS_HOST = ''
+REDIS_PORT = 000
+
 ```
 
 ## Logging Level
