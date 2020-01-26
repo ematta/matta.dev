@@ -33,17 +33,17 @@ check: mypy black flake8 static packages
 .PHONY: mypy
 mypy:
 	@. .venv/bin/activate; \
-	mypy server;
+	mypy api;
 
 .PHONY: black
 black:
 	@. .venv/bin/activate; \
-	black server --exclude .venv; \
+	black api --exclude .venv; \
 
 .PHONY: flake8
 flake8:
 	@. .venv/bin/activate; \
-	flake8 server --exclude .venv -v;
+	flake8 api --exclude .venv -v;
 
 .PHONY: report
 report:
@@ -58,7 +58,7 @@ packages:
 .PHONY: static
 static:
 	@. .venv/bin/activate; \
-	bandit -r server
+	bandit -r api
 
 .PHONY: integration-test
 integration-test:

@@ -13,7 +13,8 @@ def load_config():
     config = {}
     with open(f"{APP_ROOT}/{APP_ENV}.toml") as f:
         config = pytoml.load(f)
-    config['secret_key'] = Fernet.generate_key()
+    config["secret_key"] = Fernet.generate_key()
     return config
+
 
 config = load_config()

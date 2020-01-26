@@ -6,6 +6,4 @@ async def handle_index_get(request):
     return web.json_response(data)
 
 
-routes = [
-    web.get('/', handle_index_get)
-]
+routes = [web.get("/", handle_index_get)]
