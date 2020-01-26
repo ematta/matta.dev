@@ -23,7 +23,7 @@ async def migrate():
         CREATE TABLE IF NOT EXISTS users(
             id          SERIAL,
             name        text,
-            username    text,
+            email       text,
             password    text,
             role_id     integer,
             PRIMARY KEY (id),
