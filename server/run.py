@@ -30,7 +30,7 @@ async def init_app() -> "Application":
     app["config"] = config
     await init_pg_pool(app)
     await init_redis_pool(app)
-    app['dropbox'] = Dropbox(config['dropbox']['ACCESS_TOKEN'])
+    app["dropbox"] = Dropbox(config["dropbox"]["ACCESS_TOKEN"])
     aiohttp_jinja2.setup(
         app, loader=jinja2.FileSystemLoader(f"{SERVER_ROOT}/templates"),
     )
