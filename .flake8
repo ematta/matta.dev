@@ -1,2 +1,4 @@
 [flake8]
 max-line-length = 120
+docstring-convention = pep257
+ignore = D401
