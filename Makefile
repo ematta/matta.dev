@@ -7,7 +7,7 @@ SERVER_ROOT = ./server
 .PHONY: all
 all:
 	@. .venv/bin/activate; \
-	python app.py
+	gunicorn server.run:init_app --bind localhost:8080 --worker-class aiohttp.GunicornWebWorker
 
 .PHONY: debug
 debug:

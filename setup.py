@@ -14,6 +14,7 @@ install_requires = [
     'cchardet==2.1.5',
     'cryptography==2.8',
     'dropbox==9.4.0',
+    'gunicorn==20.0.4',
     'Jinja2==2.10.3',
     'Markdown==3.1.1',
     'psycopg2==2.8.4',
