@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from logging import Logger
 
 logger: "Logger" = getLogger(__name__)
-logger.setLevel(config["LOGGER_LEVEL"])
+logger.setLevel(config["app"]["LOGGER_LEVEL"])
 
 formatter: "Formatter" = Formatter(
     "%(asctime)s - %(name)s - %(levelname)s - %(message)s",

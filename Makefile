@@ -5,12 +5,15 @@ FILE := ''
 SERVER_ROOT = ./server
 
 .PHONY: all
-all:
+all: venv check local
+
+.PHONY: server
+server:
 	@. .venv/bin/activate; \
 	gunicorn server.run:init_app --bind localhost:8080 --worker-class aiohttp.GunicornWebWorker
 
-.PHONY: debug
-debug:
+.PHONY: local
+local:
 	@. .venv/bin/activate; \
 	adev runserver;
 
@@ -18,16 +21,13 @@ debug:
 destroy:
 	@rm -rf .venv; \
 
-.PHONY: install
-install: venv
-	@. .venv/bin/activate \
-	&& pip install --upgrade pip \
-	&& pip install -r requirements.txt
-
 .PHONY: venv
 venv:
 	@if [ ! -d .venv ]; then \
 		python3 -m venv .venv; \
+		. .venv/bin/activate; \
+		pip install --upgrade pip; \
+		pip install -r requirements.txt; \
 	fi
 
 .PHONY: check
