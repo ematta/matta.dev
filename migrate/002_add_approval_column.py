@@ -1,11 +1,10 @@
 import asyncpg
 
-from server.utilities.config import config
 from server.database.postgres import db_url
 
 
 async def migrate():
-    url = db_url(config["database"])
+    url = db_url()
     conn = await asyncpg.connect(url)
     await conn.execute("""
         ALTER TABLE users
