@@ -15,7 +15,7 @@ from dropbox import Dropbox
 import jinja2
 
 from server.database.postgres import init_pg_pool
-from server.database.redis import init_redis_pool
+from server.database.redis import close_redis, init_redis_pool
 from server.routes.api import routes as api_routes
 from server.routes.ui import routes as ui_routes
 from server.utilities.config import SERVER_ROOT, config
@@ -28,9 +28,10 @@ async def init_app() -> "Application":
     """Generates our Application."""
     app: "Application" = Application()
     app["config"] = config
-    await init_pg_pool(app)
-    await init_redis_pool(app)
-    app['dropbox'] = Dropbox(config['dropbox']['ACCESS_TOKEN'])
+    app["pg_pool"] = await init_pg_pool()
+    app["redis_pool"] = await init_redis_pool()
+    app.on_cleanup.append(close_redis)
+    app["dropbox"] = Dropbox(config["dropbox"]["ACCESS_TOKEN"])
     aiohttp_jinja2.setup(
         app, loader=jinja2.FileSystemLoader(f"{SERVER_ROOT}/templates"),
     )

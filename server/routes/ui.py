@@ -21,7 +21,9 @@ async def handler_blog(request) -> "Dict":
 @template("blog.jinja2")
 async def handler_specific_post(request: "Request") -> "Dict":
     """Returns a specific post."""
-    post: "str" = await get_post(post=request.match_info['post'], dbx=request.app["dropbox"])
+    post: "str" = await get_post(
+        post=request.match_info["post"], dbx=request.app["dropbox"],
+    )
     return {"post": post}
 
 

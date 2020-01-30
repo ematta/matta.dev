@@ -24,7 +24,7 @@ async def generate_token(email: "str") -> "bytes":
             "iat": datetime.utcnow(),
             "exp": datetime.utcnow() + timedelta(hours=2),
         },
-        config["secret_key"],
+        config["SECRET_KEY"],
     )
 
 
@@ -44,7 +44,7 @@ def token_required(f: "Callable") -> "Response":
             return web.json_response(resp)
         try:
             token: "str" = auth_headers[1]
-            data: "str" = jwt.decode(token, config["secret_key"])
+            data: "str" = jwt.decode(token, config["SECRET_KEY"])
             async with request.app["pg_pool"].acquire() as conn:
                 user: "Record" = await find_user_by_email(conn=conn, email=data["sub"])
                 if not user:

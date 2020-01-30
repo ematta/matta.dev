@@ -5,9 +5,7 @@ from typing import Dict
 
 from cryptography.fernet import Fernet
 
-
 import pytoml
-
 
 APP_ENV: "str" = os.environ["APP_ENV"]
 APP_ROOT: "str" = str(Path(__file__).parent.parent.parent)
@@ -22,7 +20,7 @@ def load_config() -> "Dict":
     config: "Dict" = {}
     with open(f"{APP_ROOT}/{APP_ENV}.toml") as f:
         config = pytoml.load(f)
-    config["secret_key"] = Fernet.generate_key()
+    config["SECRET_KEY"] = Fernet.generate_key()
     return config
 
 

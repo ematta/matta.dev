@@ -1,23 +1,24 @@
 """Postgres engine creator."""
-from typing import Dict, TYPE_CHECKING
-
 import asyncpg
 
-if TYPE_CHECKING:
-    from asyncpg.pool import Pool
-    from aiohttp.web import Application
+from server.utilities.config import config
+from server.utilities.logger import logger
 
 
-def db_url(config: "Dict") -> "str":
+def db_url() -> "str":
     """Creates PG DSN."""
+    db_config = config["database"]
+    logger.debug(f"POSTGRES_USER: {db_config['POSTGRES_USER']}")
+    logger.debug(f"POSTGRES_URL: {db_config['POSTGRES_URL']}")
+    logger.debug(f"POSTGRES_PORT: {db_config['POSTGRES_PORT']}")
+    logger.debug(f"POSTGRES_DB: {db_config['POSTGRES_DB']}")
     return (
         "postgresql://"
-        f"{config['POSTGRES_USER']}:{config['POSTGRES_PASSWORD']}"
-        f"@{config['POSTGRES_URL']}:{config['POSTGRES_PORT']}/{config['POSTGRES_DB']}"
+        f"{db_config['POSTGRES_USER']}:{db_config['POSTGRES_PASSWORD']}"
+        f"@{db_config['POSTGRES_URL']}:{db_config['POSTGRES_PORT']}/{db_config['POSTGRES_DB']}"
     )
 
 
-async def init_pg_pool(app: "Application"):
+async def init_pg_pool():
     """Sets pg pool for application."""
-    pool: "Pool" = await asyncpg.create_pool(db_url(app["config"]["database"]))
-    app["pg_pool"] = pool
+    return await asyncpg.create_pool(db_url())
