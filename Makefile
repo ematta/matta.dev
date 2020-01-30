@@ -17,6 +17,11 @@ local:
 	@. .venv/bin/activate; \
 	adev runserver;
 
+.PHONY: migrate
+migrate: venv
+	@. venv/bin/activate; \
+	python migration.py;
+
 .PHONY: destroy
 destroy:
 	@rm -rf .venv; \
