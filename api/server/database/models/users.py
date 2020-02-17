@@ -16,7 +16,7 @@ async def find_user_by_email(conn: "Connection", email: "str") -> "Record":
     )
 
 
-async def get_users(conn: "Connection") -> "Any":
+async def find_all_users(conn: "Connection") -> "Any":
     """Returns all users."""
     return await conn.fetch(
         """

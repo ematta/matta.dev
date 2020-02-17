@@ -16,8 +16,8 @@ import jinja2
 
 from server.database.postgres import init_pg_pool
 from server.database.redis import close_redis, init_redis_pool
-from server.routes.api import routes as api_routes
-from server.routes.ui import routes as ui_routes
+from server.routes.user import routes as user_routes
+from server.routes.post import routes as post_routes
 from server.utilities.config import SERVER_ROOT, config
 
 if TYPE_CHECKING:
@@ -29,16 +29,7 @@ async def init_app() -> "Application":
     app: "Application" = Application()
     app["config"] = config
     app["pg_pool"] = await init_pg_pool()
-    app["redis_pool"] = await init_redis_pool()
-    app.on_cleanup.append(close_redis)
-    app["dropbox"] = Dropbox(config["dropbox"]["ACCESS_TOKEN"])
-    aiohttp_jinja2.setup(
-        app, loader=jinja2.FileSystemLoader(f"{SERVER_ROOT}/templates"),
-    )
-    app.router.add_static("/static/", path=f"{SERVER_ROOT}/static", name="static")
-    app["static_root_url"] = "server/"
-    setup_session(app, RedisStorage(app["redis_pool"]))
-    app.add_routes(api_routes + ui_routes)
+    app.add_routes(user_routes + post_routes)
     cors: "CorsConfig" = aiohttp_cors.setup(
         app,
         defaults={

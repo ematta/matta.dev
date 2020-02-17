@@ -1,11 +1,7 @@
 import asyncpg
 
-from server.database.postgres import db_url
 
-
-async def migrate():
-    url = db_url()
-    conn = await asyncpg.connect(url)
+async def migrate(conn):
     await conn.execute("DROP TABLE IF EXISTS roles CASCADE")
     await conn.execute("DROP TABLE IF EXISTS users CASCADE")
     await conn.execute(
@@ -30,4 +26,3 @@ async def migrate():
         )
     """
     )
-    await conn.close()

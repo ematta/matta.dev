@@ -15,7 +15,7 @@ async def user_payload(data: "Dict", pool: "Pool") -> "Tuple[Dict, int]":
     payload: "Dict" = {
         "success": None,
         "message": "",
-        "token": b"",
+        "token": "",
         "user": {},
     }
     status: "int" = 0
@@ -37,7 +37,8 @@ async def user_payload(data: "Dict", pool: "Pool") -> "Tuple[Dict, int]":
                 ]  # Clean out the hashed password before sending
                 payload["success"] = True
                 payload["message"] = "User authenticated"
-                payload["token"] = await generate_token(user_data["email"])
+                token = await generate_token(user_data["email"])
+                payload["token"] = str(token)
                 payload["user"] = user_data
                 status = 201
         else:

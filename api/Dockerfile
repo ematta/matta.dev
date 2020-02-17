@@ -1,9 +1,9 @@
-FROM ubuntu:18.10
+FROM python:3.8.1-buster
 
 LABEL maintainer="Enrique Matta <enrique@matta.dev>"
 
 RUN apt-get update
-RUN apt-get install -y python3 python3-dev python3-pip libpq-dev
+RUN apt-get install -y libpq-dev
 
 COPY ./ /app
 
